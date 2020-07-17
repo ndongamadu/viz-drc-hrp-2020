@@ -114,6 +114,7 @@ function mapClicked (e) {
 		generatePieChart(adm3, data.pieChart);
 	});
   updateClusterChart(data.columns);
+  updateFromZSante(adm3);
 }
 
 function onEachFeature(feature, layer) {

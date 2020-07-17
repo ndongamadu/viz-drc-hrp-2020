@@ -1,7 +1,7 @@
 const geodataLink = 'data/rdc.json';
 const nationalbyClusterURL = 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%23gid%3D1962340639';
 const byClusterURL = 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fusp%3Dsharing';
-
+const clusterDataURL = 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fpli%3D1%23gid%3D1216774376';
 
 let geodata;
 let nationalbyCluster;
@@ -12,6 +12,8 @@ let provincesArr = [];
 let zoneSanteArr = [];
 let provincesAndZSData = [];
 
+let indicatorsByCluster = [];
+
 let choroplethData = [];
 
  
@@ -21,7 +23,8 @@ $( document ).ready(function() {
     Promise.all([
       d3.json(geodataLink),
       d3.csv(nationalbyClusterURL),
-      d3.csv(byClusterURL)
+      d3.csv(byClusterURL),
+      d3.csv(clusterDataURL)
     ]).then(function(data){
       geodata = topojson.feature(data[0], data[0].objects.zsante);
 
@@ -77,9 +80,18 @@ $( document ).ready(function() {
 
       byClusterData = data[2];
 
+      data[3].forEach( function(item) {
+        var obj = {'cluster': item['#cluster+name'], 'ind': item['#indicator+name']};
+        indicatorsByCluster.push(obj);
+      });
+
       initialize();
+      //remove loader and show vis
+      $('.loader').hide();
+      $('main').css('opacity', 1);
 
     }) ;
+
 
     
   }
@@ -150,7 +162,7 @@ $( document ).ready(function() {
     });
     $('#zoneSanteSelect').multipleSelect('refresh');
 
-
+    //cluster select
     $('#clusterSelect').multipleSelect('destroy');
     $('#clusterSelect').empty();
     var clusterSelect = d3.select('#clusterSelect')
@@ -160,10 +172,18 @@ $( document ).ready(function() {
           .text(function(d){ return d; })
           .attr("value", function(d) { return d; });
 
-    $('#clusterSelect').multipleSelect({
-      placeholder: 'Séléctionner cluster'
-    });
+    $('#clusterSelect').multipleSelect();
+    $('#clusterSelect').prepend('<option value="">Séléctionner cluster</option>');
+    $('#clusterSelect').val($('#clusterSelect option:first').val());
     $('#clusterSelect').multipleSelect('refresh');
+
+    // indicators select
+    $('#indicateurSelect').multipleSelect('destroy');
+    $('#indicateurSelect').empty();
+    $('#indicateurSelect').multipleSelect({
+      placeholder: 'Séléctionner activité',
+    });
+    $('#indicateurSelect').multipleSelect('refresh');
 
     generateMap(geodata);
     generateStackedBar([x, reachedArr, gapArr]);
@@ -175,10 +195,9 @@ $( document ).ready(function() {
     updateZoneSanteSelect();
   });
 
-
-  function testCall() {
-    console.log("fonction appelee"); 
-  }
+  $('#clusterSelect').on('change', function(d){
+    updateIndicatorSelect();
+  });
 
 
   var sortByReached = function sort_by_reached(d1, d2) {
@@ -191,8 +210,5 @@ $( document ).ready(function() {
 
   getData();
 
-  //remove loader and show vis
-  $('.loader').hide();
-  $('main').css('opacity', 1);
   
 });
