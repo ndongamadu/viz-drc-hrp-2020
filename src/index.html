@@ -16,12 +16,17 @@
     <link href='css/styles.css' rel='stylesheet' />
     <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/jquery.dataTables.min.css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/c3/0.7.11/c3.min.js"></script>
     <script src="https://d3js.org/d3.v5.js"></script>
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
     <script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.4/xlsx.full.min.js"></script>
   </head>
 
   <body>
@@ -55,29 +60,41 @@
             The boundaries and names shown and the designations used on this map do not imply official endorsement or acceptance by the United Nations.
           </p>
         </div>
-        <div class="col-12">
+        <div class="col-12" id="table">
           <h3>Apercu des indicateurs</h3>
           <div class="indicators">
             <div class="filter-container">
-              <label for="provinceSelect">Province</label>
+              <!-- <label for="provinceSelect">Province</label> -->
               <select id="provinceSelect" class="filter-select"></select>
             </div>
 
             <div class="filter-container">
-              <label for="zoneSanteSelect">Zone de Santé</label>
+              <!-- <label for="zoneSanteSelect">Zone de Santé</label> -->
               <select id="zoneSanteSelect" class="filter-select"></select>
             </div>
 
             <div class="filter-container">
-              <label for="clusterSelect">Cluster</label>
+              <!-- <label for="clusterSelect">Cluster</label> -->
               <select class="filter-select" id="clusterSelect"></select>
             </div>
             <div class="filter-container">
-              <label for="indicateurSelect"> Activité</label>
+              <!-- <label for="indicateurSelect"> Activité</label> -->
               <select class="filter-select" id="indicateurSelect"></select>
             </div>
+
+            <button type="button" class="btn btn-outline-primary" id="apply">Exécuter</button>
+            
+            <a role='button' id="reset" class='align-right' href='#table'></i> Reset</a>
+
           </div>
           <div class="indicateurs">
+            <table id="datatable" class="display" style="width:100%">
+              <thead>
+                <tr>
+
+                </tr>
+              </thead>
+            </table>
           </div>
         </div>
       </div>

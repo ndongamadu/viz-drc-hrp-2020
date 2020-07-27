@@ -124,7 +124,7 @@ h3 {
 .filter-container {
 	flex: 1 1 auto;
 	font-size: 15px;
-	margin-bottom: 20px;
+	margin-bottom: 10px;
 
 	label {
 		padding-right: 5px;
@@ -133,8 +133,8 @@ h3 {
 	.filter-select {
 		background-color: #FFF;
 		font-size: 15px;
-    	height: 30px;
-    	width: 180px;
+    	height: 45px;
+    	width: 160px;
 	}
 }
 
@@ -162,6 +162,24 @@ footer {
 	}
 }
 
+#datatable {
+	margin-top: 20px;
+	thead {
+		tr {
+			text-align: left;
+			th {
+				&:last-child {
+					min-width: 112px;
+				}
+			}
+		}
+	}
+}
+
+.btn {
+	background-color: #418FDE;
+	height: 25px;
+}
 
 @media only screen and (max-width: 767px) {
 	.logos {

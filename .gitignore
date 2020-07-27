@@ -21,3 +21,5 @@ dist/
 package-lock.json
 
 todo
+
+src/data/indicators_data.xlsx

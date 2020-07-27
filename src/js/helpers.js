@@ -26,7 +26,37 @@ function hxlProxyToJSON(input){
     return output;
 }
 
+let clustersEn = ['food_security', 'shelter', 'nfi', 'nutrition', 'health', 'protection', 'education', 'wash'];
 
+
+function getClusterFr(cluster) {
+    var fr = "";
+    cluster=="food_security" ? fr = "Sécurité Alimentaire" : 
+    cluster=="shelter" ? fr = "Abris" : 
+    cluster=="nfi" ? fr = "Article Ménager Essentiel" : 
+    cluster=="nutrition" ? fr = "Nutrition" : 
+    cluster=="health" ? fr = "Santé" : 
+    cluster=="protection" ? fr = "Protection" : 
+    cluster=="education" ? fr = "Education" :
+    cluster=="wash" ? fr = "WASH" : '';
+    
+    return fr;
+} //getClusterFr
+
+
+function getClusterEN(clusteur) {
+    var en = "";
+    clusteur=="Sécurité Alimentaire" ? en = "food_security" : 
+    clusteur=="Abris" ? en = "shelter" : 
+    clusteur=="Article Ménager Essentiel" ? en = "nfi" : 
+    clusteur=="Nutrition" ? en = "nutrition" : 
+    clusteur=="Santé" ? en = "health" : 
+    clusteur=="Protection" ? en = "protection" : 
+    clusteur=="Education" ? en = "education" :
+    clusteur=="WASH" ? en = "wash" : '';
+    
+    return en;
+} //getClusterFr
 
 
 

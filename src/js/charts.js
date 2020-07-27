@@ -3,22 +3,9 @@ let ochaOrange = '#ECA154';
 
 let clusterBarchart ;
 
-let clustersEn = ['food_security', 'shelter', 'nfi', 'nutrition', 'health', 'protection', 'education', 'wash'];
 
 
-function getClusterFr(cluster) {
-	var fr = "";
-	cluster=="food_security" ? fr = "Sécurité Alimentaire" : 
-	cluster=="shelter" ? fr = "Abris" : 
-	cluster=="nfi" ? fr = "Article Ménager Essentiel" : 
-	cluster=="nutrition" ? fr = "Nutrition" : 
-	cluster=="health" ? fr = "Santé" : 
-	cluster=="protection" ? fr = "Protection" : 
-	cluster=="education" ? fr = "Education" :
-	cluster=="wash" ? fr = "WASH" : '';
-	
-	return fr;
-} //getClusterFr
+
 
 function generateStackedBar(data){
 
