@@ -277,7 +277,6 @@ function updateTablePerCluster() {
 } //updateTablePerCluster
 
 function updateTablePerZSante() {
-
 	var selectedZsante = $('#zoneSanteSelect').val();
 	var selectedCluster = $('#clusterSelect').val();
 	
@@ -299,9 +298,8 @@ function updateTablePerZSante() {
 			if (ciblees != 0) {
 				pct = ((atteintes/ciblees)*100).toFixed(2);
 			}
-			var indNames = arr.filter(function(d){ return d.code == ind; });
-			var indName = arr[0].ind;
-			datatab.push([clster, indName, d3.format(',d')(ciblees), d3.format(',d')(atteintes), pct+"%"]);
+			var name = getindicatorNameFromCode(ind);
+			datatab.push([clster, name, d3.format(',d')(ciblees), d3.format(',d')(atteintes), pct+"%"]);
 		});
 		
 	});
@@ -311,6 +309,7 @@ function updateTablePerZSante() {
 
 
 function updateTablePerIndicator() {
+
 	var selectedInd = $('#indicateurSelect').val();
 	var indCode ;
 	indicatorsByCluster.forEach( function(element) {
@@ -336,6 +335,13 @@ function updateTablePerIndicator() {
 	drawTable('indicateur', datatab); 
 } //updateTablePerIndicator
 
+
+function getindicatorNameFromCode(code) {
+	var arr = indicatorsByCluster.filter(function(d){
+		return d.code == code ;
+	});
+	return arr[0].ind;
+}//getindicatorNameFromCode
 
 
 $('#zoneSanteSelect').on('change', function(){
@@ -761,7 +767,6 @@ $( document ).ready(function() {
         clusterArr.includes(item['#cluster+name']) ? '' : clusterArr.push(item['#cluster+name']);
       });
       indicatorsData = data[4];
-
 
 
       initialize();
