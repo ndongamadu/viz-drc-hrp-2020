@@ -48,7 +48,7 @@ $( document ).ready(function() {
         element['#targeted+all'] = +element['#targeted+all'];
         element['#reached+all'] = +element['#reached+all'];
         element['#indicator+gap'] = +element['#indicator+gap'];
-        clusterArr.includes(element['#cluster+name']) ? '' : clusterArr.push(element['#cluster+name']);
+        // clusterArr.includes(element['#cluster+name']) ? '' : clusterArr.push(element['#cluster+name']);
       });
 
       nationalbyCluster = data[1];
@@ -98,6 +98,7 @@ $( document ).ready(function() {
       data[3].forEach( function(item) {
         var obj = {'cluster': item['#cluster+name'], 'ind': item['#indicator+name'], 'code': item['#indicator+code']};
         indicatorsByCluster.push(obj);
+        clusterArr.includes(item['#cluster+name']) ? '' : clusterArr.push(item['#cluster+name']);
       });
       indicatorsData = data[4];
 

@@ -61,7 +61,7 @@ function drawTable(type, data) {
 	var colones = [];
 	var dataT = [];
 	if (type=='zsante') {
-		colonnes = ["Cluster", "Activité", "Personnes Ciblées", "Personnes Atteintes", "% Personnes Atteintes"];
+		colonnes = ["Cluster", "Activité", "Pers. Ciblées", "Pers. Atteintes", "% Pers. Atteintes"];
 	} else if (type=='indicateur') {
 		colonnes = ["Territoire", "Zone de Santé", "Personnes Ciblées", "Personnes Atteintes", "% Personnes Atteintes"];
 	} else if (type='autre'){
@@ -144,21 +144,20 @@ function updateTablePerZSante() {
 	}
 
 	clusters.forEach( function(clster) {
-		if (clster != "Protection") {
-			var arr = indicatorsByCluster.filter(function(d){ return d.cluster == clster; });
-			var indics = arr.map(function(d){ return d.code; });
-			indics.forEach( function(ind) {
-				var ciblees = +data[0][ind+"_Total cible"];
-				var atteintes = +data[0][ind+"_atteint"];
-				var pct = 0;
-				if (ciblees != 0) {
-					pct = ((atteintes/ciblees)*100).toFixed(2);
-				}
-				datatab.push([clster, ind, ciblees, atteintes, pct]);
-			});
-		}
-
-
+		var arr = indicatorsByCluster.filter(function(d){ return d.cluster == clster; });
+		var indics = arr.map(function(d){ return d.code; });
+		indics.forEach( function(ind) {
+			var ciblees = +data[0][ind+"_Total cible"];
+			var atteintes = +data[0][ind+"_atteint"];
+			var pct = 0;
+			if (ciblees != 0) {
+				pct = ((atteintes/ciblees)*100).toFixed(2);
+			}
+			var indNames = arr.filter(function(d){ return d.code == ind; });
+			var indName = arr[0].ind;
+			datatab.push([clster, indName, ciblees, atteintes, pct]);
+		});
+		
 	});
 
 	drawTable('zsante', datatab); 
