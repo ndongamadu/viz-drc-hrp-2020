@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/css/jquery.dataTables.min.css">
 
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css">
-    
+
     <!-- datatables exports -->
 <!--     <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -60,39 +60,37 @@
           </div>
           
         </div>
-<!--         <div class="col-12">
-          
-        </div> -->
+
         <div class="col-6">
           <div id="keyfigures"></div>
           <div id="barchart"></div>
-           <!-- <h3>Profil humanitaire par cluster</h3> -->
         </div>
         <div class="col-6">
           <div id="map"></div>
-          <p class="small">
+          <div class="mapFooter">
+            <a href="#" id="resetMap" role="button">Réinitialiser la carte</a>
+            <p >
             The boundaries and names shown and the designations used on this map do not imply official endorsement or acceptance by the United Nations.
           </p>
+
+          </div>
+
         </div>
         <div class="col-12" id="table">
           <h3>Apercu des indicateurs</h3>
           <div class="indicators">
             <div class="filter-container">
-              <!-- <label for="provinceSelect">Province</label> -->
               <select id="provinceSelect" class="filter-select"></select>
             </div>
 
             <div class="filter-container">
-              <!-- <label for="zoneSanteSelect">Zone de Santé</label> -->
               <select id="zoneSanteSelect" class="filter-select"></select>
             </div>
 
             <div class="filter-container">
-              <!-- <label for="clusterSelect">Cluster</label> -->
               <select class="filter-select" id="clusterSelect"></select>
             </div>
             <div class="filter-container">
-              <!-- <label for="indicateurSelect"> Activité</label> -->
               <select class="filter-select" id="indicateurSelect"></select>
             </div>
 
