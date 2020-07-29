@@ -100,9 +100,9 @@ function getAdm3ClusterData(adm3) {
 
 function generateKeyFigures(arr) {
 
-	var kf1 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[0])+'</div><h4>Pers. dans le besoin</h4></div>';
-	var kf2 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[1])+'</div><h4>Pers. ciblées</h4></div>';
-	var kf3 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[2])+'</div><h4>Pers. atteintes</h4></div>';
+	var kf1 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[0])+'</div><h4>Pers. dans le besoin</h4></div>';
+	var kf2 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[1])+'</div><h4>Pers. ciblées</h4></div>';
+	var kf3 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[2])+'</div><h4>Pers. atteintes</h4></div>';
 	var kf4 = '<div class="col-3 keyfig"><div class="num">'+arr[3]+'% </div><h4>Pers. atteintes(%)</h4></div>';
 	$('#keyfigures').html('')
 	$('#keyfigures').append(kf1);
@@ -226,7 +226,8 @@ function drawTable(type, data) {
 		var dtArr = byClusterData.filter(function(d){ return d['#adm1+name'] == selectedProvince; });
 		var dTable = [];
 		dtArr.forEach( function(item) {
-			dataT.push([item['#adm2+name'], item['#adm3+name'], item['#targeted+all'],item['#reached+all'], item['#reached+all+pct']]);
+			var pct = (item['#reached+all+pct']).toFixed(2);
+			dataT.push([item['#adm2+name'], item['#adm3+name'], d3.format(',d')(item['#targeted+all']),d3.format(',d')(item['#reached+all']), pct+"%"]);
 		});
 	} else {
 		dataT = data;
@@ -240,7 +241,11 @@ function drawTable(type, data) {
 	    data : [],
 	    "bFilter" : false,
 	    "bLengthChange" : false,
-	    "pageLength": 30
+	    "pageLength": 30,
+	    dom: 'Bfrtip',
+	    buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ]
 	  });
 	}
 	$('#datatable').dataTable().fnAddData(dataT);
@@ -259,12 +264,12 @@ function updateTablePerCluster() {
 
 	data.forEach( function(item) {
 		var cible = Number(item['#targeted+cluster+'+clster]) ;
-		var atteint = Number(item['#reached+cluster+'+clster]) ;
+		var atteint = item['#reached+cluster+'+clster] ;
 		var pct = 0;
 		if (cible != 0) {
 			pct = ((atteint/cible)*100).toFixed(2);
 		}
-		dataT.push([item['#adm2+name'], item['#adm3+name'], cible, atteint, pct]);
+		dataT.push([item['#adm2+name'], item['#adm3+name'], d3.format(',d')(cible), d3.format(',d')(atteint), pct+"%"]);
 	});
 
 	drawTable("autre", dataT);
@@ -296,7 +301,7 @@ function updateTablePerZSante() {
 			}
 			var indNames = arr.filter(function(d){ return d.code == ind; });
 			var indName = arr[0].ind;
-			datatab.push([clster, indName, ciblees, atteintes, pct]);
+			datatab.push([clster, indName, d3.format(',d')(ciblees), d3.format(',d')(atteintes), pct+"%"]);
 		});
 		
 	});
@@ -732,7 +737,6 @@ $( document ).ready(function() {
       });
       indicatorsData = data[4];
 
-      console.log(data[4])
 
 
       initialize();
