@@ -99,8 +99,9 @@ $( document ).ready(function() {
         var obj = {'cluster': item['#cluster+name'], 'ind': item['#indicator+name'], 'code': item['#indicator+code']};
         indicatorsByCluster.push(obj);
       });
-      console.log(indicatorsByCluster)
       indicatorsData = data[4];
+
+      console.log(data[4])
 
 
       initialize();

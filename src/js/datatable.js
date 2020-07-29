@@ -98,7 +98,8 @@ function drawTable(type, data) {
 	  $('#datatable').DataTable({
 	    data : [],
 	    "bFilter" : false,
-	    "bLengthChange" : false
+	    "bLengthChange" : false,
+	    "pageLength": 30
 	  });
 	}
 	$('#datatable').dataTable().fnAddData(dataT);
@@ -119,8 +120,8 @@ function updateTablePerCluster() {
 		var cible = Number(item['#targeted+cluster+'+clster]) ;
 		var atteint = Number(item['#reached+cluster+'+clster]) ;
 		var pct = 0;
-		if (atteint != 0) {
-			pct = ((cible/atteint)*100).toFixed(2);
+		if (cible != 0) {
+			pct = ((atteint/cible)*100).toFixed(2);
 		}
 		dataT.push([item['#adm2+name'], item['#adm3+name'], cible, atteint, pct]);
 	});
@@ -135,6 +136,7 @@ function updateTablePerZSante() {
 	var selectedCluster = $('#clusterSelect').val();
 	
 	var data = indicatorsData.filter(function(d){ return d["Zone de Santé"]==selectedZsante ;});
+
 	var datatab = [];
 	var clusters = clusterArr ;
 	if (selectedCluster !="") {
@@ -149,8 +151,8 @@ function updateTablePerZSante() {
 				var ciblees = +data[0][ind+"_Total cible"];
 				var atteintes = +data[0][ind+"_atteint"];
 				var pct = 0;
-				if (atteintes != 0) {
-					pct = ((ciblees/atteintes)*100).toFixed(2);
+				if (ciblees != 0) {
+					pct = ((atteintes/ciblees)*100).toFixed(2);
 				}
 				datatab.push([clster, ind, ciblees, atteintes, pct]);
 			});
@@ -180,8 +182,8 @@ function updateTablePerIndicator() {
 		var ciblees = +item[indCode+'_Total cible'];
 		var atteintes = +item[indCode+'_atteint'];
 		var pct = 0;
-		if (atteintes != 0) {
-			pct = ((ciblees/atteintes)*100).toFixed(2);
+		if (ciblees != 0) {
+			pct = ((atteintes/ciblees)*100).toFixed(2);
 		}
 		datatab.push([item['Territoire'], item['Zone de Santé'], ciblees, atteintes, pct]);
 

@@ -115,6 +115,7 @@ function mapClicked (e) {
 	});
   updateClusterChart(data.columns);
   updateFromZSante(adm3);
+  updateTablePerZSante();
 }
 
 function onEachFeature(feature, layer) {

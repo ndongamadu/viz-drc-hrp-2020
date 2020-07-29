@@ -12,6 +12,7 @@ function generateStackedBar(data){
 	clusterBarchart = c3.generate({
 		bindto: '#barchart',
 		size: { height: 450 },
+		padding: {right: 15},
 	    data: {
 	        x: 'x',
 	        columns: data,
@@ -32,9 +33,10 @@ function generateStackedBar(data){
 	          }
 	      },
 	      y: {
-	      	show: false,
 	      	tick: {
-	      		outer: false
+	      		outer: false,
+	      		format: d3.format('.2s'),
+	      		count: 5,
 	      	}
 	      } 
 	    }
@@ -88,10 +90,10 @@ function getAdm3ClusterData(adm3) {
     var maxPin      = d3.max(reachedList, function(d) { return d.pin;});
     var maxTargeted = d3.max(reachedList, function(d) { return d.targeted;});
     var maxGap = ((maxReached / maxTargeted) *100 ).toFixed(2);
-
+    var maxGapRetranche = 100 - maxGap ;
     generateKeyFigures([maxPin, maxTargeted, maxReached, maxGap]);
 	
-	return {'columns':[x, reachedArr, gapArr], 'pieChart': [maxTargeted, maxPin]};
+	return {'columns':[x, reachedArr, gapArr], 'pieChart': [maxGap, maxGapRetranche]};
 }//getAdm3ClusterData
 
 
@@ -109,8 +111,8 @@ function generateKeyFigures(arr) {
 } //generateKeyFigures
 
 function generatePieChart(name, data) {
-	var pin = ['PIN', data[1]];
-	var cible = ['Pers. ciblées', data[0]];
+	var pin = ['Atteintes', data[0]];
+	var cible = ['Gap', data[1]];
 
 	var chart = c3.generate({
 		bindto: '.pieChart',
