@@ -196,10 +196,16 @@ $( document ).ready(function() {
     generateKeyFigures(keyfigsArr);
     drawTable();
     // getIndicatorData("SO2_IN2");
+
     
   } //initialize
 
 
+
+  $('#resetMap').on('click', function(e){
+    console.log("reset charts graphe")
+    initialize();
+  })
   var sortByReached = function sort_by_reached(d1, d2) {
       if (d1['#reached+all'] > d2['#reached+all']) return -1;
       if (d1['#reached+all'] < d2['#reached+all']) return 1; 

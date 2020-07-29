@@ -79,6 +79,23 @@ function generateMap(geom) {
     };
 
     legend.addTo(map);
+
+    // // add reset button 
+    // var info = L.control();
+
+    // info.onAdd = function (map) {
+    //     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    //     // this.update();
+    //     this._div.innerHTML = '<button type="button" id="resetMap" href="#">Réinitialiser</button>'
+    //     return this._div;
+    // };
+
+    // // method that we will use to update the control based on feature properties passed
+    // info.update = function (props) {
+    //     resetFromMap();
+    // };
+
+    // info.addTo(map);
 } //generateMap
 
 
