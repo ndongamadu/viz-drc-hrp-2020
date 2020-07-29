@@ -103,7 +103,6 @@ $( document ).ready(function() {
       indicatorsData = data[4];
 
 
-
       initialize();
 
       //remove loader and show vis
