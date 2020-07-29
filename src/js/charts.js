@@ -99,9 +99,9 @@ function getAdm3ClusterData(adm3) {
 
 function generateKeyFigures(arr) {
 
-	var kf1 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[0])+'</div><h4>Pers. dans le besoin</h4></div>';
-	var kf2 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[1])+'</div><h4>Pers. ciblées</h4></div>';
-	var kf3 = '<div class="col-3 keyfig"><div class="num">'+d3.format("~s")(arr[2])+'</div><h4>Pers. atteintes</h4></div>';
+	var kf1 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[0])+'</div><h4>Pers. dans le besoin</h4></div>';
+	var kf2 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[1])+'</div><h4>Pers. ciblées</h4></div>';
+	var kf3 = '<div class="col-3 keyfig"><div class="num">'+d3.format(".4s")(arr[2])+'</div><h4>Pers. atteintes</h4></div>';
 	var kf4 = '<div class="col-3 keyfig"><div class="num">'+arr[3]+'% </div><h4>Pers. atteintes(%)</h4></div>';
 	$('#keyfigures').html('')
 	$('#keyfigures').append(kf1);

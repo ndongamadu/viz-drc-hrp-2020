@@ -102,7 +102,6 @@ $( document ).ready(function() {
       });
       indicatorsData = data[4];
 
-      console.log(data[4])
 
 
       initialize();
