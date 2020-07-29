@@ -481,6 +481,7 @@ function getClusterEN(clusteur) {
 
 let map;
 let geojson;
+let info;
 
 let mapColor  = '';
 let ochaNeutral = '#999999';
@@ -561,22 +562,28 @@ function generateMap(geom) {
 
     legend.addTo(map);
 
-    // // add reset button 
-    // var info = L.control();
+    // add reset button 
+     info = L.control();
 
-    // info.onAdd = function (map) {
-    //     this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
-    //     // this.update();
-    //     this._div.innerHTML = '<button type="button" id="resetMap" href="#">Réinitialiser</button>'
-    //     return this._div;
-    // };
+    info.onAdd = function (map) {
+        this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+        this.update();
+        return this._div;
+    };
 
-    // // method that we will use to update the control based on feature properties passed
-    // info.update = function (props) {
-    //     resetFromMap();
-    // };
-
-    // info.addTo(map);
+    // method that we will use to update the control based on feature properties passed
+    info.update = function (props) {
+      var deflt = "<h4>Séléctionner sur une zone de santé</h4>";
+      
+      if (props == undefined) {
+        this._div.innerHTML = deflt ;
+      } else {
+        this._div.innerHTML = '<h3> Zone de Santé '+ props.Nom + '</h3>';
+       
+      }
+ 
+    };
+    info.addTo(map);
 } //generateMap
 
 
@@ -614,6 +621,7 @@ function mapClicked (e) {
   updateClusterChart(data.columns);
   updateFromZSante(adm3);
   updateTablePerZSante();
+  info.update(layer.feature.properties)
 }
 
 function onEachFeature(feature, layer) {
