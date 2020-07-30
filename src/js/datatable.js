@@ -6,7 +6,7 @@ function updateZoneSanteSelect() {
 		data.forEach( function(item) {
 			zones.includes(item.zsante) ? '' : zones.push(item.zsante);
 		});
-
+		zones.sort();
 		$('#zoneSanteSelect').empty();
 		var zsanteSelect = d3.select('#zoneSanteSelect')
 				.selectAll("option")
@@ -42,6 +42,7 @@ function updateIndicatorSelect(argument) {
 		});
 
 		$('#indicateurSelect').empty();
+		inds.sort();
 		var indSelect = d3.select('#indicateurSelect')
 			.selectAll("option")
 			.data(inds)
@@ -204,11 +205,14 @@ function getindicatorNameFromCode(code) {
 
 
 $('#zoneSanteSelect').on('change', function(){
+	
+	$('#indicateurSelect').val($('#indicateurSelect option:first').val());
 	d3.select('#indicateurSelect').attr("disabled", "disabled");
 	$('#indicateurSelect').multipleSelect('refresh');
 });
 
 $('#indicateurSelect').on('change', function(){
+	$('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
 	d3.select('#zoneSanteSelect').attr("disabled", "disabled");
 	$('#zoneSanteSelect').multipleSelect('refresh');
 });
@@ -249,11 +253,9 @@ $('#apply').on('click', function(d){
 	// updateTablePerProvince();
 
 	$('#zoneSanteSelect').removeAttr("disabled");
-	$('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
 	$('#zoneSanteSelect').multipleSelect('refresh');
 
 	$('#indicateurSelect').removeAttr("disabled");
-	$('#indicateurSelect').val($('#indicateurSelect option:first').val());
 	$('#indicateurSelect').multipleSelect('refresh');
 
 });
