@@ -140,7 +140,11 @@ function mapClicked (e) {
   updateClusterChart(data.columns);
   updateFromZSante(adm3);
   updateTablePerZSante();
-  info.update(layer.feature.properties)
+  info.update(layer.feature.properties);
+
+  $('#indicateurSelect').val($('#indicateurSelect option:first').val());
+  d3.select('#indicateurSelect').attr("disabled", "disabled");
+  $('#indicateurSelect').multipleSelect('refresh');
 }
 
 function onEachFeature(feature, layer) {
