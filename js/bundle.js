@@ -147,7 +147,7 @@ function updateZoneSanteSelect() {
 		data.forEach( function(item) {
 			zones.includes(item.zsante) ? '' : zones.push(item.zsante);
 		});
-
+		zones.sort();
 		$('#zoneSanteSelect').empty();
 		var zsanteSelect = d3.select('#zoneSanteSelect')
 				.selectAll("option")
@@ -183,6 +183,7 @@ function updateIndicatorSelect(argument) {
 		});
 
 		$('#indicateurSelect').empty();
+		inds.sort();
 		var indSelect = d3.select('#indicateurSelect')
 			.selectAll("option")
 			.data(inds)
@@ -345,11 +346,14 @@ function getindicatorNameFromCode(code) {
 
 
 $('#zoneSanteSelect').on('change', function(){
+	
+	$('#indicateurSelect').val($('#indicateurSelect option:first').val());
 	d3.select('#indicateurSelect').attr("disabled", "disabled");
 	$('#indicateurSelect').multipleSelect('refresh');
 });
 
 $('#indicateurSelect').on('change', function(){
+	$('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
 	d3.select('#zoneSanteSelect').attr("disabled", "disabled");
 	$('#zoneSanteSelect').multipleSelect('refresh');
 });
@@ -390,11 +394,9 @@ $('#apply').on('click', function(d){
 	// updateTablePerProvince();
 
 	$('#zoneSanteSelect').removeAttr("disabled");
-	$('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
 	$('#zoneSanteSelect').multipleSelect('refresh');
 
 	$('#indicateurSelect').removeAttr("disabled");
-	$('#indicateurSelect').val($('#indicateurSelect option:first').val());
 	$('#indicateurSelect').multipleSelect('refresh');
 
 });
@@ -810,6 +812,7 @@ $( document ).ready(function() {
     
     $('#provinceSelect').multipleSelect('destroy');
     $('#provinceSelect').empty();
+    provincesArr.sort();
     var provinceSelect = d3.select('#provinceSelect')
             .selectAll("option")
             .data(provincesArr)
@@ -828,6 +831,19 @@ $( document ).ready(function() {
     // zone de sante select
     $('#zoneSanteSelect').multipleSelect('destroy');
     $('#zoneSanteSelect').empty();
+    var data = provincesAndZSData.filter(function(d){ return d.province=='Nord-Kivu'; });
+    var zones = [];
+    data.forEach( function(item) {
+      zones.includes(item.zsante) ? '' : zones.push(item.zsante);
+    });
+    zones.sort();
+    var zonesSanteSelect = d3.select('#zoneSanteSelect')
+            .selectAll("option")
+            .data(zones)
+            .enter().append("option")
+              .text(function(d) { return d; })
+              .attr("value", function(d){ return d; });
+
     $('#zoneSanteSelect').multipleSelect();
     $('#zoneSanteSelect').prepend('<option value="">Séléctionner zone de santé</option>');
     $('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
@@ -836,6 +852,7 @@ $( document ).ready(function() {
     //cluster select
     $('#clusterSelect').multipleSelect('destroy');
     $('#clusterSelect').empty();
+    clusterArr.sort();
     var clusterSelect = d3.select('#clusterSelect')
         .selectAll("option")
         .data(clusterArr)
