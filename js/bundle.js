@@ -387,6 +387,8 @@ $('#apply').on('click', function(d){
 			drawTable();
 		}
 
+	} else if (selectedProvince != ""){
+		drawTable();
 	}
 
 	// if nothing is selected call reset();
