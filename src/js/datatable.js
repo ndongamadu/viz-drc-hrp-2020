@@ -101,7 +101,7 @@ function drawTable(type, data) {
 	    data : [],
 	    "bFilter" : false,
 	    "bLengthChange" : false,
-	    "pageLength": 30,
+	    "pageLength": 20,
 	    dom: 'Bfrtip',
 	    buttons: [
             'copy', 'csv', 'excel', 'pdf', 'print'
@@ -235,6 +235,9 @@ $('#apply').on('click', function(d){
 
 	if (selectedZsante !="") {
 		updateTablePerZSante();
+		var data = getAdm3ClusterData(selectedZsante);	
+		updateClusterChart(data.columns);
+		info.update(selectedZsante);
 
 	} else if (selectedInd !="") {
 		updateTablePerIndicator();

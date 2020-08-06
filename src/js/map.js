@@ -91,13 +91,13 @@ function generateMap(geom) {
     };
 
     // method that we will use to update the control based on feature properties passed
-    info.update = function (props) {
+    info.update = function (adm3) {
       var deflt = "<h4>Séléctionner sur une zone de santé</h4>";
       
-      if (props == undefined) {
+      if (adm3 == undefined) {
         this._div.innerHTML = deflt ;
       } else {
-        this._div.innerHTML = '<h3> Zone de Santé '+ props.Nom + '</h3>';
+        this._div.innerHTML = '<h3> Zone de Santé '+ adm3 + '</h3>';
        
       }
  
@@ -140,7 +140,7 @@ function mapClicked (e) {
   updateClusterChart(data.columns);
   updateFromZSante(adm3);
   updateTablePerZSante();
-  info.update(layer.feature.properties);
+  info.update(adm3);
 
   $('#indicateurSelect').val($('#indicateurSelect option:first').val());
   d3.select('#indicateurSelect').attr("disabled", "disabled");
