@@ -12,7 +12,7 @@ function generateStackedBar(data){
 
 	clusterBarchart = c3.generate({
 		bindto: '#barchart',
-		size: { height: 450 },
+		size: { height: 470 },
 		padding: {right: 15},
 	    data: {
 	        x: 'x',
