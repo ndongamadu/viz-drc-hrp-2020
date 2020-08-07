@@ -59,6 +59,9 @@ h3 {
 	font-size: 15px;
 
 }
+.charts {
+	margin-right: 15px;
+}
 
 #keyfigures {
 	padding-right: 10px;
@@ -193,6 +196,7 @@ footer {
 	thead {
 		tr {
 			text-align: left;
+			font-size: 13px;
 			th {
 				&:last-child {
 					min-width: 112px;
@@ -204,6 +208,7 @@ footer {
 		tr {
 			td {
 				text-align: right;
+				font-size: 13px;
 			}
 		}
 	}
