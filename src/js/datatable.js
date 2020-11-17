@@ -23,13 +23,17 @@ function updateZoneSanteSelect() {
 } //updateZoneSanteSelect
 
 function updateFromZSante(zone_sante) {
-	var prov =  provincesAndZSData.filter(function(d){ return d.zsante==zone_sante; })[0].province;
-	$('#provinceSelect').val(prov);
-	$('#provinceSelect').multipleSelect('refresh');
+	if (trimestreNumber == 1) {
 
-	updateZoneSanteSelect();
-	$('#zoneSanteSelect').val(zone_sante);
-	$('#zoneSanteSelect').multipleSelect('refresh');
+	} else {
+		var prov =  provincesAndZSData.filter(function(d){ return d.zsante==zone_sante; })[0].province;
+		$('#provinceSelect').val(prov);
+		$('#provinceSelect').multipleSelect('refresh');
+
+		updateZoneSanteSelect();
+		$('#zoneSanteSelect').val(zone_sante);
+		$('#zoneSanteSelect').multipleSelect('refresh');
+	}
 } //updateFromZSante
 
 function updateIndicatorSelect(argument) {
@@ -205,7 +209,6 @@ function getindicatorNameFromCode(code) {
 
 
 $('#zoneSanteSelect').on('change', function(){
-	
 	$('#indicateurSelect').val($('#indicateurSelect option:first').val());
 	d3.select('#indicateurSelect').attr("disabled", "disabled");
 	$('#indicateurSelect').multipleSelect('refresh');
@@ -219,10 +222,20 @@ $('#indicateurSelect').on('change', function(){
 
 
 $('#provinceSelect').on('change', function(d){
+	// if (trimestreNumber == 1) {
+	// 	d3.select('#zoneSanteSelect').attr("disabled", "disabled");
+	// 	d3.select('#indicateurSelect').attr("disabled", "disabled");
+	// 	$('#zoneSanteSelect').multipleSelect('refresh');
+	// }
 	updateZoneSanteSelect();
 });
 
 $('#clusterSelect').on('change', function(d){
+	// if (trimestreNumber == 1) {
+	// 	d3.select('#zoneSanteSelect').attr("disabled", "disabled");
+	// 	d3.select('#indicateurSelect').attr("disabled", "disabled");
+	// 	$('#zoneSanteSelect').multipleSelect('refresh');
+	// }
 	updateIndicatorSelect();
 });
 
@@ -256,12 +269,14 @@ $('#apply').on('click', function(d){
 	// if nothing is selected call reset();
 
 	// updateTablePerProvince();
+	if (trimestreNumber != 1) {
+		$('#zoneSanteSelect').removeAttr("disabled");
+		$('#zoneSanteSelect').multipleSelect('refresh');
 
-	$('#zoneSanteSelect').removeAttr("disabled");
-	$('#zoneSanteSelect').multipleSelect('refresh');
+		$('#indicateurSelect').removeAttr("disabled");
+		$('#indicateurSelect').multipleSelect('refresh');
+	} 
 
-	$('#indicateurSelect').removeAttr("disabled");
-	$('#indicateurSelect').multipleSelect('refresh');
 
 });
 

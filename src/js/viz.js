@@ -5,6 +5,25 @@ const clusterDataURL = 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&st
 // const indicatorsListURL = 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fpli%3D1%23gid%3D1216774376';
 const indicatorsDataURL = 'data/global.csv';
 
+const config = [
+      { 
+        "nationalbyClusterURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%23gid%3D1962340639',
+        "byClusterURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fusp%3Dsharing',
+        "clusterDataURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fpli%3D1%23gid%3D1216774376',
+        "indicatorsDataURL": 'data/global.csv'
+      },
+      {
+        "nationalbyClusterURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%23gid%3D54391145',
+        "byClusterURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%23gid%3D960993453',
+        "clusterDataURL": 'https://proxy.hxlstandard.org/data.csv?dest=data_edit&strip-headers=on&url=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F1uGpZX4Ze_pk7yICc1ExWSbAuYD6MYMginWkXgcX99FQ%2Fedit%3Fpli%3D1%23gid%3D1216774376',
+        "indicatorsDataURL": 'data/global.csv'
+      }
+];
+
+//let trimestreNumber = 0;
+let trimestreNumber = config.length -1;
+$('#trimestreSelect').val(trimestreNumber);
+
 let geodata;
 let nationalbyCluster;
 let byClusterData;
@@ -23,23 +42,13 @@ let indicatorsData ;
  
 $( document ).ready(function() {
 
-  // fetch(cadreMethodoURL).then(function(res){
-  //   if(!res.ok) throw new Error("fetch failed");
-  //   return res.arrayBuffer();
-  // }).then(function(ab){
-  //   var data = new Uint8Array(ab);
-  //   workbookIndicators = XLSX.read(data, {type: "array" });
-  // });
-
-
   function getData() {
     Promise.all([
       d3.json(geodataLink),
-      d3.csv(nationalbyClusterURL),
-      d3.csv(byClusterURL),
-      d3.csv(clusterDataURL),
-      // d3.csv(indicatorsListURL),
-      d3.csv(indicatorsDataURL)
+      d3.csv(config[trimestreNumber].nationalbyClusterURL),
+      d3.csv(config[trimestreNumber].byClusterURL),
+      d3.csv(config[trimestreNumber].clusterDataURL),
+      d3.csv(config[trimestreNumber].indicatorsDataURL)
     ]).then(function(data){
       geodata = topojson.feature(data[0], data[0].objects.zsante);
 
@@ -101,6 +110,7 @@ $( document ).ready(function() {
         clusterArr.includes(item['#cluster+name']) ? '' : clusterArr.push(item['#cluster+name']);
       });
       indicatorsData = data[4];
+
 
 
       initialize();
@@ -179,6 +189,8 @@ $( document ).ready(function() {
     $('#zoneSanteSelect').multipleSelect();
     $('#zoneSanteSelect').prepend('<option value="">Séléctionner zone de santé</option>');
     $('#zoneSanteSelect').val($('#zoneSanteSelect option:first').val());
+    $('#zoneSanteSelect').removeAttr("disabled");
+    trimestreNumber == 1 ? d3.select('#zoneSanteSelect').attr("disabled", "disabled") : '';
     $('#zoneSanteSelect').multipleSelect('refresh');
 
     //cluster select
@@ -204,6 +216,8 @@ $( document ).ready(function() {
     $('#indicateurSelect').prepend('<option value="">Séléctionner activité</option>');
     $('#indicateurSelect').val($('#indicateurSelect option:first').val());
     $('#indicateurSelect').multipleSelect('refresh');
+    trimestreNumber == 1 ? d3.select('#indicateurSelect').attr("disabled", "disabled") : '';
+    $('#indicateurSelect').multipleSelect('refresh');
 
     generateMap(geodata);
     generateStackedBar([x, reachedArr, gapArr]);
@@ -219,7 +233,20 @@ $( document ).ready(function() {
   $('#resetMap').on('click', function(e){
     console.log("reset charts graphe")
     initialize();
-  })
+  });
+
+  $('#trimestreSelect').on('change', function(d){
+    trimestreNumber = $('#trimestreSelect').val();
+    
+    //remove loader and show vis
+    $('.loader').show();
+    $('main').css('opacity', 0);
+
+    getData();
+
+
+  });
+
   var sortByReached = function sort_by_reached(d1, d2) {
       if (d1['#reached+all'] > d2['#reached+all']) return -1;
       if (d1['#reached+all'] < d2['#reached+all']) return 1; 
