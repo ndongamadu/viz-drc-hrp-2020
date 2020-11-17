@@ -104,6 +104,22 @@ main {
   border-bottom: 1px solid #418FDE;
   margin-bottom: 10px;
   margin-top: 20px; }
+  .header .textes {
+    flex: auto 1; }
+  .header .dropdown {
+    flex: 200 1;
+    justify-content: flex-end;
+    margin-left: 10px; }
+
+#trimestreSelect {
+  background-color: #FFF;
+  border-color: #FFF;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  font: 700 13px 'Source Sans Pro', sans-serif;
+  height: 25px;
+  white-space: pre-wrap;
+  color: #418FDE; }
 
 h1 {
   margin-top: 0;
